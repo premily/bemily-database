@@ -29,14 +29,14 @@ class Database {
     }
 
     // create database instance
-    createDatabase() {
+    private createDatabase = ()=> {
         this.db = new (this.cradle.Connection)();
         console.log(this.db);
         // check if database exists
-        if(!this.db) {
+        if (!this.db) {
             throw new Error('Error: database does not exist!');
         }
-    }
+    };
 
 
     register:IRegister = (server, options, next) => {
@@ -49,8 +49,9 @@ class Database {
         // Register
         return 'register';
     }
+
     errorInit(error) {
-        if(error) {
+        if (error) {
             console.log('Error: init plugin failed:', error);
         }
     }
