@@ -8,7 +8,7 @@ class Database {
     private db:any;
     private cradle:any;
 
-    constructor(url?:string, port?:number) {
+    constructor(database:string, url?:string, port?:number) {
         // register plugin
         this.register.attributes = {
             name: 'bemily-database',
@@ -25,13 +25,12 @@ class Database {
                 port: port
             });
         }
-        this.createDatabase();
+        this.openDatabase(database);
     }
 
     // create database instance
-    private createDatabase = ()=> {
-        this.db = new (this.cradle.Connection)();
-        console.log(this.db);
+    private openDatabase = (database:string)=> {
+        this.db = new (this.cradle.Connection)().database(database);
         // check if database exists
         if (!this.db) {
             throw new Error('Error: database does not exist!');
