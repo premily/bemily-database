@@ -25,8 +25,19 @@ class Database {
                 port: port
             });
         }
-
+        this.createDatabase();
     }
+
+    // create database instance
+    createDatabase() {
+        this.db = new (this.cradle.Connection)();
+        console.log(this.db);
+        // check if database exists
+        if(!this.db) {
+            throw new Error('Error: database does not exist!');
+        }
+    }
+
 
     register:IRegister = (server, options, next) => {
         server.bind(this);
