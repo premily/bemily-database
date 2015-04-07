@@ -19,6 +19,8 @@ describe('Plugin', function () {
             expect(err).to.not.exist();
             expect(plugin._register).to.be.a.function();
             expect(plugin._register()).to.be.a.string();
+            expect(plugin.createDatabase).to.be.a.function();
+            expect(plugin.db).to.be.exists();
             done();
         });
     });
