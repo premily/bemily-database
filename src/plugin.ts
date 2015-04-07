@@ -5,11 +5,27 @@ export interface IRegister {
 
 export default
 class Database {
-    constructor() {
+    private db:any;
+    private cradle:any;
+
+    constructor(url?:string, port?:number) {
+        // register plugin
         this.register.attributes = {
             name: 'bemily-database',
             version: '0.1.0'
         };
+
+        // import database plugin
+        this.cradle = require('cradle');
+
+        // use specific setup options if committed
+        if (url && port) {
+            this.cradle.setup({
+                host: url,
+                port: port
+            });
+        }
+
     }
 
     register:IRegister = (server, options, next) => {
