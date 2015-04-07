@@ -22,4 +22,9 @@ class Database {
         // Register
         return 'register';
     }
+    errorInit(error) {
+        if(error) {
+            console.log('Error: init plugin failed:', error);
+        }
+    }
 }
