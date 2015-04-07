@@ -25,6 +25,7 @@
     "node-notifier": "^4.1.2"
   },
   "dependencies": {
+    "cradle": "^0.6.9",
     "typescript": "^1.5.0-alpha"
   }
 }
