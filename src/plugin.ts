@@ -38,6 +38,17 @@ class Database {
     };
 
 
+    public getUserLogin = (nameOfUser:string) => {
+        console.log(nameOfUser);
+        this.db.view('login/login', function (err, res) {
+            if(err) {
+                throw Error(err);
+            }
+            return res;
+        });
+    };
+
+
     register:IRegister = (server, options, next) => {
         server.bind(this);
         this._register(server, options);
