@@ -153,6 +153,15 @@ class Database {
         });
     }
 
+    updateUser(userId:string, rev:string, user ,callback) {
+        this.db.save(userId, rev, user, function (err, res) {
+            if(err) {
+                callback(err);
+            }
+            callback(null, res);
+        });
+    }
+
     /**
      * Get json object with ser login data of specific user id.
      *
