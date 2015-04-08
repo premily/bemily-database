@@ -90,7 +90,7 @@ class Database {
             path: '/login/{userid}',
             handler: (request, reply) => {
                 this.getUserLogin(request.params.userid, (err, data) => {
-                    if(err) {
+                    if (err) {
                         return reply(err).code(400);
                     }
                     reply(data);
@@ -103,8 +103,23 @@ class Database {
             method: 'GET',
             path: '/users/{userid}',
             handler: (request, reply) => {
-                this.getUserById(request.params.userid,(err, data) => {
-                    if(err) {
+                this.getUserById(request.params.userid, (err, data) => {
+                    if (err) {
+                        return reply(err).code(400);
+                    }
+                    reply(data);
+                });
+            }
+        });
+
+        // route to update user information
+        server.route({
+            method: 'PUT',
+            path: '/users',
+            handler: (request, reply) => {
+                var user = request.payload.user;
+                this.updateUser(user._id, user._rev, user, (err, data) => {
+                    if (err) {
                         return reply(err).code(400);
                     }
                     reply(data);
@@ -119,7 +134,7 @@ class Database {
             handler: (request, reply) => {
                 var user = request.payload;
                 this.db.save(user, (err, res) => {
-                    if(err) {
+                    if (err) {
                         return reply(err).code(400);
                     }
                     reply(res);
@@ -139,7 +154,7 @@ class Database {
      */
     getUserById(userId:string, callback) {
         this.db.view(this.VIEW_USER_USER, function (err, res) {
-            if(err) {
+            if (err) {
                 callback(err);
             }
             callback(null, res);
@@ -154,16 +169,16 @@ class Database {
      */
     createUser(user, callback) {
         this.db.save(user, function (err, res) {
-            if(err) {
+            if (err) {
                 callback(err);
             }
             callback(null, res);
         });
     }
 
-    updateUser(userId:string, rev:string, user ,callback) {
+    updateUser(userId:string, rev:string, user, callback) {
         this.db.save(userId, rev, user, function (err, res) {
-            if(err) {
+            if (err) {
                 callback(err);
             }
             callback(null, res);
@@ -180,7 +195,7 @@ class Database {
      */
     getUserLogin(userId:string, callback) {
         this.db.view(this.VIEW_USER_LOGIN, function (err, res) {
-            if(err) {
+            if (err) {
                 callback(err);
             }
             callback(null, res);
