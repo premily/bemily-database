@@ -4,6 +4,8 @@
 ## CouchDB views
 
 ### 'user/user'
+This view display all user information.
+
 ```javascript
 function(doc) {
  if(doc.type == 'user') {
@@ -22,6 +24,18 @@ function(doc) {
  }
 }
 ```
+### 'user/login'
+View to display login informations.
+
+```javascript
+function(doc) {
+ if(doc.type == 'user') {
+   emit('login', {_id: doc._id, password: doc.password
+   });
+ }
+}
+```
+
 
 ## Tests
 
