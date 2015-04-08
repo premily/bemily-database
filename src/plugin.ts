@@ -5,6 +5,9 @@ export interface IRegister {
 
 // TODO: refactor user stuff in new file
 
+/**
+ * database plugin
+ */
 export default
 class Database {
     private db:any;
@@ -15,6 +18,16 @@ class Database {
     VIEW_USER_LOGIN = 'user/login';
     VIEW_USER_USER = 'user/user';
 
+    /**
+     * Constructor to create a database instance
+     *
+     * @param database:string
+     *      represents the name of the database
+     * @param url:string
+     *      url to the storage location of the database
+     * @param port
+     *      port to connect to the storage location
+     */
     constructor(database:string, url?:string, port?:number) {
         // register plugin
         this.register.attributes = {
@@ -35,7 +48,7 @@ class Database {
         this.openDatabase(database);
     }
 
-    // create database instance
+    // open database instance
     private openDatabase = (database:string)=> {
         this.db = new (this.cradle.Connection)().database(database);
         // check if database exists
@@ -43,6 +56,7 @@ class Database {
             throw new Error('Error: database does not exist!');
         }
     };
+
     /**
      * exposes functions to other plugins
      * @param server
@@ -62,6 +76,7 @@ class Database {
     };
 
     private _register(server, options) {
+        // route to get login data of user
         server.route({
             method: 'GET',
             path: '/login/{userid}',
@@ -75,6 +90,7 @@ class Database {
             }
         });
 
+        // route to get user
         server.route({
             method: 'GET',
             path: '/users/{userid}',
@@ -88,6 +104,7 @@ class Database {
             }
         });
 
+        // route to create new user
         server.route({
             method: 'POST',
             path: '/users',
@@ -106,7 +123,13 @@ class Database {
         return 'register';
     }
 
-    getUserById(id:string, callback) {
+    /**
+     * Get user from database by specific user id.
+     *
+     * @param userId:string
+     * @param callback
+     */
+    getUserById(userId:string, callback) {
         this.db.view(this.VIEW_USER_USER, function (err, res) {
             if(err) {
                 callback(err);
@@ -115,6 +138,12 @@ class Database {
         });
     }
 
+    /**
+     * Create a new user.
+     *
+     * @param user:json-object
+     * @param callback
+     */
     createUser(user, callback) {
         this.db.save(user, function (err, res) {
             if(err) {
@@ -124,7 +153,14 @@ class Database {
         });
     }
 
-    // TODO: implement functionality to get specific user id
+    /**
+     * Get json object with ser login data of specific user id.
+     *
+     * TODO: implement functionality to get specific user id
+     *
+     * @param userId
+     * @param callback
+     */
     getUserLogin(userId:string, callback) {
         this.db.view(this.VIEW_USER_LOGIN, function (err, res) {
             if(err) {
@@ -133,7 +169,6 @@ class Database {
             callback(null, res);
         });
     }
-
 
 
     errorInit(error) {
