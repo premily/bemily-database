@@ -4,7 +4,7 @@
 ## CouchDB views
 
 ### 'user/user'
-```json
+```javascript
 function(doc) {
  if(doc.type == 'user') {
    emit('user', {
