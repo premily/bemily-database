@@ -1,8 +1,41 @@
-# hapi-typescript-plugin
+# bemily-database
 
-This is a very basic template to write [HapiJs-Plugins](http://hapijs.com/api#plugins) with TypeScript.
 
-It has a gulptask included to compile the source to JavaScript. This task is also referenced in the package.json as postinstall script.
+## CouchDB views
+
+### 'user/user'
+This view display all user information.
+
+```javascript
+function(doc) {
+ if(doc.type == 'user') {
+   emit(doc._id, {
+	_rev: doc._rev,
+	picture: doc.picture,
+	name: doc.name, 
+	surname: doc.surname,
+	mail: doc.mail,
+	major: doc.major,
+	semester: doc.semester,
+	subscribed_groups: doc.subscribed_groups,
+	password: doc.password
+	});
+ }
+}
+```
+### 'user/login'
+View to display login information.
+
+```javascript
+function(doc) {
+ if(doc.type == 'user') {
+   emit(doc._id, {
+   	password: doc.password
+   });
+ }
+}
+```
+
 
 ## Tests
 
