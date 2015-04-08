@@ -41,16 +41,13 @@ class Database {
             throw new Error('Error: database does not exist!');
         }
     };
-
-
-    // TODO: implement functionality to get specific user id
-    getUserLogin(userId:string, callback) {
-        this.db.view(this.VIEW_USER_LOGIN, function (err, res) {
-            if(err) {
-                callback(err);
-            }
-            callback(null, res);
-        });
+    /**
+     * exposes functions to other plugins
+     * @param server
+     */
+    exportApi(server) {
+        server.expose('getUser', this.getUserById);
+        server.expose('getUserLogin', this.getUserLogin);
     }
 
 
@@ -62,7 +59,6 @@ class Database {
     };
 
     private _register(server, options) {
-
         server.route({
             method: 'GET',
             path: '/login/{userid}',
@@ -78,14 +74,14 @@ class Database {
 
         server.route({
             method: 'GET',
-            path: '/user/{userid}',
+            path: '/users/{userid}',
             handler: (request, reply) => {
-                    this.getUserById(request.params.userid,(err, data) => {
-                        if(err) {
-                            return reply(err).code(400);
-                        }
-                        reply(data);
-                    });
+                this.getUserById(request.params.userid,(err, data) => {
+                    if(err) {
+                        return reply(err).code(400);
+                    }
+                    reply(data);
+                });
             }
         });
 
@@ -100,17 +96,28 @@ class Database {
             }
             callback(null, res);
         });
-        return 'getUser called';
     }
 
-    /**
-     * exposes functions to other plugins
-     * @param server
-     */
-    exportApi(server) {
-        server.expose('getUser', this.getUserById);
-        server.expose('getUserLogin', this.getUserLogin);
+    createUser(user, callback) {
+        this.db.save(user, function (err, res) {
+            if(err) {
+                callback(err);
+            }
+            callback(null, res);
+        });
     }
+
+    // TODO: implement functionality to get specific user id
+    getUserLogin(userId:string, callback) {
+        this.db.view(this.VIEW_USER_LOGIN, function (err, res) {
+            if(err) {
+                callback(err);
+            }
+            callback(null, res);
+        });
+    }
+
+
 
     errorInit(error) {
         if (error) {
