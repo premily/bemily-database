@@ -70,7 +70,7 @@ class Database {
      * @param server
      */
     exportApi(server) {
-        server.expose('getUser', this.getUserById);
+        server.expose('getUserById', this.getUserById);
         server.expose('getUserLogin', this.getUserLogin);
         server.expose('createUser', this.createUser);
     }
