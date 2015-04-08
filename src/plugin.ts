@@ -42,7 +42,8 @@ class Database {
     };
 
 
-    getUserLogins(callback) {
+    // TODO: add parameter to get specific user
+    getUserLogin(callback) {
         this.db.view('login/login', function (err, res) {
             if(err) {
                 callback(err);
@@ -66,7 +67,7 @@ class Database {
             method: 'GET',
             path: '/logins',
             handler: (request, reply) => {
-                this.getUserLogins((err, data) => {
+                this.getUserLogin((err, data) => {
                     if(err) {
                         return reply(err).code(400);
                     }
@@ -90,6 +91,7 @@ class Database {
      */
     exportApi(server) {
         server.expose('getUser', this.getUser);
+        server.expose('getUserLogin', this.getUserLogin);
     }
 
     errorInit(error) {
