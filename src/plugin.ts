@@ -10,7 +10,8 @@ class Database {
 
     // defines
     const
-    LOGIN_VIEW = 'login/login';
+    VIEW_USER_LOGIN = 'user/login';
+    VIEW_USER_USER = 'user/user';
 
     constructor(database:string, url?:string, port?:number) {
         // register plugin
@@ -44,11 +45,10 @@ class Database {
 
     // TODO: add parameter to get specific user
     getUserLogin(callback) {
-        this.db.view('login/login', function (err, res) {
+        this.db.view(this.VIEW_USER_LOGIN, function (err, res) {
             if(err) {
                 callback(err);
             }
-            console.log(res);
             callback(null, res);
         });
     }
@@ -65,7 +65,7 @@ class Database {
 
         server.route({
             method: 'GET',
-            path: '/logins',
+            path: '/login',
             handler: (request, reply) => {
                 this.getUserLogin((err, data) => {
                     if(err) {
@@ -73,7 +73,6 @@ class Database {
                     }
                     reply(data);
                 });
-
             }
         });
 
@@ -81,7 +80,13 @@ class Database {
         return 'register';
     }
 
-    getUser() {
+    getUserById(id:string, callback) {
+        this.db.view(this.VIEW_USER_USER, function (err, res) {
+            if(err) {
+                callback(err);
+            }
+            callback(null, res);
+        });
         return 'getUser called';
     }
 
@@ -90,7 +95,7 @@ class Database {
      * @param server
      */
     exportApi(server) {
-        server.expose('getUser', this.getUser);
+        server.expose('getUser', this.getUserById);
         server.expose('getUserLogin', this.getUserLogin);
     }
 
