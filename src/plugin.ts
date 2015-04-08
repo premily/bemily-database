@@ -153,7 +153,7 @@ class Database {
      * @param callback
      */
     getUserById(userId:string, callback) {
-        this.db.view(this.VIEW_USER_USER, function (err, res) {
+        this.db.view(this.VIEW_USER_USER, {key: userId}, function (err, res) {
             if (err) {
                 callback(err);
             }
@@ -188,13 +188,11 @@ class Database {
     /**
      * Get json object with ser login data of specific user id.
      *
-     * TODO: implement functionality to get specific user id
-     *
      * @param userId
      * @param callback
      */
     getUserLogin(userId:string, callback) {
-        this.db.view(this.VIEW_USER_LOGIN, function (err, res) {
+        this.db.view(this.VIEW_USER_LOGIN, {key: userId}, function (err, res) {
             if (err) {
                 callback(err);
             }
