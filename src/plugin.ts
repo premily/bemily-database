@@ -85,6 +85,20 @@ class Database {
             }
         });
 
+        server.route({
+            method: 'POST',
+            path: '/users',
+            handler: (request, reply) => {
+                var user = request.payload;
+                this.db.save(user, (err, res) => {
+                    if(err) {
+                        return reply(err).code(400);
+                    }
+                    reply(res);
+                })
+            }
+        });
+
         // Register
         return 'register';
     }
