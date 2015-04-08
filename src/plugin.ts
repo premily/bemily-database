@@ -3,6 +3,8 @@ export interface IRegister {
     attributes?: any;
 }
 
+// TODO: refactor user stuff in new file
+
 export default
 class Database {
     private db:any;
@@ -48,6 +50,7 @@ class Database {
     exportApi(server) {
         server.expose('getUser', this.getUserById);
         server.expose('getUserLogin', this.getUserLogin);
+        server.expose('createUser', this.createUser);
     }
 
 
