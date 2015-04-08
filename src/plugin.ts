@@ -56,6 +56,7 @@ class Database {
     register:IRegister = (server, options, next) => {
         server.bind(this);
         this._register(server, options);
+        this.exportApi(server);
         next();
     };
 
@@ -77,6 +78,18 @@ class Database {
 
         // Register
         return 'register';
+    }
+
+    getUser() {
+        console.log('getUser called');
+    }
+
+    /**
+     * exposes functions to other plugins
+     * @param server
+     */
+    exportApi(server) {
+        server.expose('getUser', this.getUser);
     }
 
     errorInit(error) {
