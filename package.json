@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "make test-cov",
-    "postinstall": "gulp ts"
+    "postinstall": "tsd reinstall && gulp ts"
   },
   "peerDependencies": {
     "hapi": ">=8.x.x"
@@ -25,6 +25,7 @@
     "node-notifier": "^4.1.2"
   },
   "dependencies": {
+    "cradle": "^0.6.9",
     "typescript": "^1.5.0-alpha"
   }
 }
