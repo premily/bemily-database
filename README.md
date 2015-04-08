@@ -25,7 +25,7 @@ function(doc) {
 }
 ```
 ### 'user/login'
-View to display login informations.
+View to display login information.
 
 ```javascript
 function(doc) {
