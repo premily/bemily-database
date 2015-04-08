@@ -7,6 +7,14 @@ export interface IRegister {
 
 /**
  * database plugin
+ *
+ * example calls:
+ *
+ *      // local database (default)
+ *      new Database('app');
+ *
+ *      // iriscouch online
+ *      new Database('app','http://emily.iriscouch.com',80);
  */
 export default
 class Database {
