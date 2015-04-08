@@ -8,6 +8,10 @@ class Database {
     private db:any;
     private cradle:any;
 
+    // defines
+    const
+    LOGIN_VIEW = 'login/login';
+
     constructor(database:string, url?:string, port?:number) {
         // register plugin
         this.register.attributes = {
@@ -38,15 +42,15 @@ class Database {
     };
 
 
-    public getUserLogin = (nameOfUser:string) => {
-        console.log(nameOfUser);
+    getUserLogins(callback) {
         this.db.view('login/login', function (err, res) {
             if(err) {
-                throw Error(err);
+                callback(err);
             }
-            return res;
+            console.log(res);
+            callback(null, res);
         });
-    };
+    }
 
 
     register:IRegister = (server, options, next) => {
@@ -56,6 +60,21 @@ class Database {
     };
 
     private _register(server, options) {
+
+        server.route({
+            method: 'GET',
+            path: '/logins',
+            handler: (request, reply) => {
+                this.getUserLogins((err, data) => {
+                    if(err) {
+                        return reply(err).code(400);
+                    }
+                    reply(data);
+                });
+
+            }
+        });
+
         // Register
         return 'register';
     }
