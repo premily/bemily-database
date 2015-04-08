@@ -25,7 +25,7 @@ class Database {
     }
 
     getUser() {
-        console.log('getUser called');
+        return 'getUser called';
     }
 
     /**
