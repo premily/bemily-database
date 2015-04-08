@@ -43,8 +43,8 @@ class Database {
     };
 
 
-    // TODO: add parameter to get specific user
-    getUserLogin(callback) {
+    // TODO: implement functionality to get specific user id
+    getUserLogin(userId:string, callback) {
         this.db.view(this.VIEW_USER_LOGIN, function (err, res) {
             if(err) {
                 callback(err);
@@ -65,9 +65,9 @@ class Database {
 
         server.route({
             method: 'GET',
-            path: '/login',
+            path: '/login/{userid}',
             handler: (request, reply) => {
-                this.getUserLogin((err, data) => {
+                this.getUserLogin(request.params.userid, (err, data) => {
                     if(err) {
                         return reply(err).code(400);
                     }
@@ -80,12 +80,12 @@ class Database {
             method: 'GET',
             path: '/user/{userid}',
             handler: (request, reply) => {
-                this.getUserById(request.params.userid,(err, data) => {
-                    if(err) {
-                        return reply(err).code(400);
-                    }
-                    reply(data);
-                });
+                    this.getUserById(request.params.userid,(err, data) => {
+                        if(err) {
+                            return reply(err).code(400);
+                        }
+                        reply(data);
+                    });
             }
         });
 
