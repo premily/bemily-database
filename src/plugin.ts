@@ -3,8 +3,6 @@ export interface IRegister {
     attributes?: any;
 }
 
-// TODO: refactor user stuff in new file
-
 /**
  * database plugin
  *
@@ -23,8 +21,9 @@ class Database {
 
     // defines
     const
-    VIEW_USER_LOGIN = 'user/login';
-    VIEW_USER_USER = 'user/user';
+    private VIEW_USER_LOGIN = 'user/login';
+    private VIEW_USER_USER = 'user/user';
+    private VIEW_GROUP_ALL = 'groups/groups';
 
     /**
      * Constructor to create a database instance
