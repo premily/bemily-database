@@ -87,7 +87,7 @@ class Database {
         // route to get login data of user
         server.route({
             method: 'GET',
-            path: '/login/{userid}',
+            path: '/test/login/{userid}',
             handler: (request, reply) => {
                 this.getUserLogin(request.params.userid, (err, data) => {
                     if (err) {
@@ -101,7 +101,7 @@ class Database {
         // route to get user
         server.route({
             method: 'GET',
-            path: '/users/{userid}',
+            path: '/test/users/{userid}',
             handler: (request, reply) => {
                 this.getUserById(request.params.userid, (err, data) => {
                     if (err) {
@@ -115,7 +115,7 @@ class Database {
         // route to update user information
         server.route({
             method: 'PUT',
-            path: '/users',
+            path: '/test/users',
             handler: (request, reply) => {
                 var user = request.payload.user;
                 this.updateUser(user._id, user._rev, user, (err, data) => {
@@ -130,7 +130,7 @@ class Database {
         // route to create new user
         server.route({
             method: 'POST',
-            path: '/users',
+            path: '/test/users',
             handler: (request, reply) => {
                 var user = request.payload;
                 this.db.save(user, (err, res) => {
