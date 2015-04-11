@@ -209,6 +209,15 @@ class Database {
         })
     }
 
+    getGroupById(groupId:string, callback) {
+        this.db.view(this.VIEW_GROUP_ALL, {key:groupId}, function(err, res) {
+            if (err) {
+                callback(err);
+            }
+            callback(null, res);
+        })
+    }
+
     errorInit(err) {
         if (err) {
             console.log('Error: init plugin failed:', err);
