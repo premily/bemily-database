@@ -199,6 +199,14 @@ class Database {
         });
     }
 
+    getGroups(callback) {
+        this.db.view(this.VIEW_GROUP_ALL, function(err, res) {
+            if (err) {
+                callback(err);
+            }
+            callback(null, res);
+        })
+    }
 
     errorInit(err) {
         if (err) {
