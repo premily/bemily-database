@@ -72,6 +72,7 @@ class Database {
         server.expose('getUserById', this.getUserById);
         server.expose('getUserLogin', this.getUserLogin);
         server.expose('createUser', this.createUser);
+        server.expose('getGroups', this.getGroups);
     }
 
 
