@@ -74,6 +74,7 @@ class Database {
         server.expose('createUser', this.createUser);
         server.expose('getGroups', this.getGroups);
         server.expose('getGroupById', this.getGroupById);
+        server.expose('createGroup', this.createGroup);
     }
 
 
@@ -160,6 +161,15 @@ class Database {
             }
             callback(null, res);
         })
+    }
+
+    createGroup(group, callback) {
+        this.db.save(group, function (err, res) {
+            if (err) {
+                callback(err);
+            }
+            callback(null, res);
+        });
     }
 
     errorInit(err) {
