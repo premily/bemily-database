@@ -10,9 +10,9 @@ class User {
      * @param userId:string
      * @param callback
      */
-    getUserById(userId:string, callback) {
+    getUserById = (userId:string, callback) => {
         this.db.view(this.VIEWS.VIEW_USER_USER, {key: userId}, callback);
-    }
+    };
 
     /**
      * Update user information.
