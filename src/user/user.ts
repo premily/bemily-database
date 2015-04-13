@@ -52,17 +52,4 @@ class User {
         return 'getUser called';
     }
 
-    /**
-     * exposes functions to other plugins
-     * @param server
-     */
-    exportApi(server) {
-        server.expose('getUser', this.getUser);
-    }
-
-    errorInit(error) {
-        if(error) {
-            console.log('Error: init plugin failed:', error);
-        }
-    }
 }
