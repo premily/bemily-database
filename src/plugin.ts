@@ -47,7 +47,6 @@ class Database {
             version: '0.1.0'
         };
 
-        this.user = new User(this.db, this.VIEWS);
 
         // import database plugin
         this.cradle = require('cradle');
@@ -69,6 +68,7 @@ class Database {
         if (!this.db) {
             throw new Error('Error: database does not exist!');
         }
+        this.user = new User(this.db, this.VIEWS);
     };
 
     /**
@@ -83,6 +83,7 @@ class Database {
         server.expose('getGroups', this.getGroups);
         server.expose('getGroupById', this.getGroupById);
         server.expose('createGroup', this.createGroup);
+        server.expose('db', this.db);
     }
 
 
