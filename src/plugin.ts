@@ -1,4 +1,5 @@
 import User from './user/user';
+import Group from './group/group';
 
 export interface IRegister {
     (server:any, options:any, next:any): void;
@@ -21,9 +22,9 @@ class Database {
     private db:any;
     private cradle:any;
     private user:any;
+    private group:any;
 
     // defines
-    const
     private VIEWS = {
         VIEW_USER_LOGIN: 'user/login',
         VIEW_USER_USER: 'user/user',
@@ -68,7 +69,9 @@ class Database {
         if (!this.db) {
             throw new Error('Error: database does not exist!');
         }
+
         this.user = new User(this.db, this.VIEWS);
+        this.group = new Group(this.db, this.VIEWS);
     };
 
     /**
@@ -76,14 +79,14 @@ class Database {
      * @param server
      */
     exportApi(server) {
+        server.expose('db', this.db);
         server.expose('getUserById', this.user.getUserById);
         server.expose('getUserLogin', this.user.getUserLogin);
         server.expose('createUser', this.user.createUser);
         server.expose('updateUser', this.user.updateUser);
-        server.expose('getGroups', this.getGroups);
-        server.expose('getGroupById', this.getGroupById);
-        server.expose('createGroup', this.createGroup);
-        server.expose('db', this.db);
+        server.expose('getGroups', this.group.getGroups);
+        server.expose('getGroupById', this.group.getGroupById);
+        server.expose('createGroup', this.group.createGroup);
     }
 
 
@@ -95,61 +98,8 @@ class Database {
     };
 
     private _register(server, options) {
-
         // Register
         return 'register';
-    }
-
-
-    /**
-     * Get all groups of database of type 'group'
-     *
-     * @param callback
-     */
-    getGroups(callback) {
-        this.db.view(this.VIEWS.VIEW_GROUP_ALL, function(err, res) {
-            if (err) {
-                callback(err);
-            }
-            callback(null, res);
-        })
-    }
-
-    /**
-     * Get specific group from database by id.
-     *
-     * @param groupId
-     * @param callback
-     */
-    getGroupById(groupId:string, callback) {
-        this.db.view(this.VIEWS.VIEW_GROUP_ALL, {key:groupId}, function(err, res) {
-            if (err) {
-                callback(err);
-            }
-            callback(null, res);
-        })
-    }
-
-    /**
-     * Create group entry in database:
-     *
-     * @param group
-     * e.g.
-     *  {
-     *   _id: 'groupNumber',
-     *   name: 'Digitaltechnik',
-     *   type: 'group'
-     *  }
-     *
-     * @param callback
-     */
-    createGroup(group, callback) {
-        this.db.save(group, function (err, res) {
-            if (err) {
-                callback(err);
-            }
-            callback(null, res);
-        });
     }
 
     errorInit(err) {
