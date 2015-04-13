@@ -24,7 +24,7 @@ class User {
      */
     updateUser = (userId:string, rev:string, user, callback) => {
         this.db.save(userId, rev, user, callback);
-    }
+    };
 
     /**
      * Create a new user.
@@ -34,7 +34,7 @@ class User {
      */
     createUser = (user, callback) => {
         this.db.save(user, callback);
-    }
+    };
 
 
     /**

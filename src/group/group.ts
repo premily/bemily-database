@@ -16,7 +16,7 @@ class Group {
             }
             callback(null, res);
         })
-    }
+    };
 
     /**
      * Get specific group from database by id.
@@ -31,7 +31,7 @@ class Group {
             }
             callback(null, res);
         })
-    }
+    };
 
     /**
      * Create group entry in database:
