@@ -9,7 +9,7 @@ class Group {
      *
      * @param callback
      */
-    getGroups(callback) {
+    getGroups = (callback) => {
         this.db.view(this.VIEWS.VIEW_GROUP_ALL, function(err, res) {
             if (err) {
                 callback(err);
@@ -24,7 +24,7 @@ class Group {
      * @param groupId
      * @param callback
      */
-    getGroupById(groupId:string, callback) {
+    getGroupById = (groupId:string, callback) => {
         this.db.view(this.VIEWS.VIEW_GROUP_ALL, {key:groupId}, function(err, res) {
             if (err) {
                 callback(err);
@@ -46,7 +46,7 @@ class Group {
      *
      * @param callback
      */
-    createGroup(group, callback) {
+    createGroup = (group, callback) => {
         this.db.save(group, function (err, res) {
             if (err) {
                 callback(err);
