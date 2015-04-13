@@ -43,9 +43,9 @@ class User {
      * @param userId
      * @param callback
      */
-    getUserLogin(userId:string, callback) {
+    getUserLogin = (userId:string, callback) => {
         this.db.view(this.VIEWS.VIEW_USER_LOGIN, {key: userId}, callback);
-    }
+    };
 
 
     getUser() {
