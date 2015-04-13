@@ -1,3 +1,5 @@
+import User from './user/user';
+
 export interface IRegister {
     (server:any, options:any, next:any): void;
     attributes?: any;
@@ -18,12 +20,15 @@ export default
 class Database {
     private db:any;
     private cradle:any;
+    private user:any;
 
     // defines
     const
-    private VIEW_USER_LOGIN = 'user/login';
-    private VIEW_USER_USER = 'user/user';
-    private VIEW_GROUP_ALL = 'groups/groups';
+    private VIEWS = {
+        VIEW_USER_LOGIN: 'user/login',
+        VIEW_USER_USER: 'user/user',
+        VIEW_GROUP_ALL: 'groups/groups'
+    };
 
     /**
      * Constructor to create a database instance
@@ -41,6 +46,8 @@ class Database {
             name: 'bemily-database',
             version: '0.1.0'
         };
+
+        this.user = new User(this.db, this.VIEWS);
 
         // import database plugin
         this.cradle = require('cradle');
@@ -69,9 +76,10 @@ class Database {
      * @param server
      */
     exportApi(server) {
-        server.expose('getUserById', this.getUserById);
-        server.expose('getUserLogin', this.getUserLogin);
+        server.expose('getUserById', this.user.getUserById);
+        server.expose('getUserLogin', this.user.getUserLogin);
         server.expose('createUser', this.createUser);
+        server.expose('updateUser', this.user.updateUser);
         server.expose('getGroups', this.getGroups);
         server.expose('getGroupById', this.getGroupById);
         server.expose('createGroup', this.createGroup);
@@ -91,67 +99,6 @@ class Database {
         return 'register';
     }
 
-    /**
-     * Get user from database by specific user id.
-     *
-     * @param userId:string
-     * @param callback
-     */
-    getUserById(userId:string, callback) {
-        this.db.view(this.VIEW_USER_USER, {key: userId}, function (err, res) {
-            if (err) {
-                callback(err);
-            }
-            callback(null, res);
-        });
-    }
-
-    /**
-     * Create a new user.
-     *
-     * @param user:json-object
-     * @param callback
-     */
-    createUser(user, callback) {
-        this.db.save(user, function (err, res) {
-            if (err) {
-                callback(err);
-            }
-            callback(null, res);
-        });
-    }
-
-    /**
-     * Update user information.
-     *
-     * @param userId
-     * @param rev
-     * @param user
-     * @param callback
-     */
-    updateUser(userId:string, rev:string, user, callback) {
-        this.db.save(userId, rev, user, function (err, res) {
-            if (err) {
-                callback(err);
-            }
-            callback(null, res);
-        });
-    }
-
-    /**
-     * Get json object with ser login data of specific user id.
-     *
-     * @param userId
-     * @param callback
-     */
-    getUserLogin(userId:string, callback) {
-        this.db.view(this.VIEW_USER_LOGIN, {key: userId}, function (err, res) {
-            if (err) {
-                callback(err);
-            }
-            callback(null, res);
-        });
-    }
 
     /**
      * Get all groups of database of type 'group'
@@ -159,7 +106,7 @@ class Database {
      * @param callback
      */
     getGroups(callback) {
-        this.db.view(this.VIEW_GROUP_ALL, function(err, res) {
+        this.db.view(this.VIEWS.VIEW_GROUP_ALL, function(err, res) {
             if (err) {
                 callback(err);
             }
@@ -174,7 +121,7 @@ class Database {
      * @param callback
      */
     getGroupById(groupId:string, callback) {
-        this.db.view(this.VIEW_GROUP_ALL, {key:groupId}, function(err, res) {
+        this.db.view(this.VIEWS.VIEW_GROUP_ALL, {key:groupId}, function(err, res) {
             if (err) {
                 callback(err);
             }
