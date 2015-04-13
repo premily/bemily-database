@@ -22,7 +22,7 @@ class User {
      * @param user
      * @param callback
      */
-    updateUser(userId:string, rev:string, user, callback) {
+    updateUser = (userId:string, rev:string, user, callback) => {
         this.db.save(userId, rev, user, callback);
     }
 
@@ -32,13 +32,13 @@ class User {
      * @param user:json-object
      * @param callback
      */
-    createUser(user, callback) {
+    createUser = (user, callback) => {
         this.db.save(user, callback);
     }
 
 
     /**
-     * Get json object with ser login data of specific user id.
+     * Get json object with login data of specific user id.
      *
      * @param userId
      * @param callback
