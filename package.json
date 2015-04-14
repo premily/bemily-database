@@ -7,6 +7,10 @@
     "test": "make test-cov",
     "postinstall": "tsd reinstall && gulp ts"
   },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/premily/bemily-database.git"
+  },
   "peerDependencies": {
     "hapi": ">=8.x.x"
   },
